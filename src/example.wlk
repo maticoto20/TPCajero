@@ -15,12 +15,12 @@ class Cuenta{
 		}
 		saldo -= monto
 	}
-	method depositar(monto, unPin){
+	method depositar(monto){
 		saldo += monto
 	}
 	method consultarSaldo(unPin){
 		if (!self.pinCorrecto(unPin)){
-			throw new Exception("Pin Incorrecto")
+			throw new Exception("Pin incorrecto")
 		}
 		return saldo
 	}
@@ -51,7 +51,7 @@ object cajero{
 		return cuentas.find({cuenta => cuenta.persona() == persona})
 	}
 	method consultarSaldo(persona, pin){
-		self.getCuenta(persona).consultarSaldo()
+		return self.getCuenta(persona).consultarSaldo(pin)
 	}
 	method depositar(persona, monto){
 		self.getCuenta(persona).depositar(monto)

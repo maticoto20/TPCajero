@@ -3,6 +3,7 @@ describe "test cajero"{
 
 	fixture{
 		cajero.abrirCuenta("pepe", 4321)
+		cajero.abrirCuenta("juana", 6666)
 	}
 	
 	test "Pepe abre una cuenta en el cajero. Luego consulta su saldo."{
@@ -24,20 +25,18 @@ describe "test cajero"{
 		assert.throwsExceptionWithMessage("Saldo insuficiente", {cajero.retirar("pepe", 900, 4321)})
 	}	
 	test"Pepe y Juana poseen una cuenta en el cajero. Pepe le realiza una transferencia."{
-		cajero.abrirCuenta(juana, 4321)	
 		cajero.depositar("pepe", 1000)
-		cajero.transferir("pepe", juana, 900, 4321)
+		cajero.transferir("pepe", "juana", 900, 4321)
 		assert.equals(100, cajero.consultarSaldo("pepe", 4321))
-		assert.equals(900, cajero.consultarSaldo(juana, 4321))
+		assert.equals(900, cajero.consultarSaldo("juana", 6666))
 	}
 	test"Pepe y Juana poseen una cuenta en el cajero. Pepe le realiza una transferencia pero no tiene ese saldo."{
-		cajero.abrirCuenta(juana, 4321)	
 		cajero.depositar("pepe", 1000)
-		assert.throwsExceptionWithMessage("Saldo insuficiente", {cajero.transferir("pepe", juana, 1500, 4321)})
+		assert.throwsExceptionWithMessage("Saldo insuficiente", {cajero.transferir("pepe", "juana", 1500, 4321)})
 	}
 	test"Pepe posee una cuenta en el cajero. Pepe le realiza una transferencia a Maria, que no tiene cuenta."{
 		cajero.depositar("pepe", 1000)
-		assert.throwsExceptionWithMessage("Cuenta inexistente", {cajero.transferir("pepe", juana, 900, 4321)})
+		assert.throwsExceptionWithMessage("Cuenta inexistente", {cajero.transferir("pepe", "maria", 900, 4321)})
 	}
 	test"Pepe posee una cuenta en el cajero y quiere abrir otra"
 	{
